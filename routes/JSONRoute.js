@@ -44,4 +44,29 @@ module.exports = function (app) {
     }
   });
 
+  // DELETE request to filter and delete a note from the database
+  // DELETE REQUEST -> READ DB -> FILTER NOTE -> WRITE DB -> RETURN DB as JSON
+  app.delete('/api/notes/:id', async (req, res) => {
+    const { id } = req.param;
+
+    try {
+      // READ DB
+      const db_response = await fs.readFile(path.join(process.cwd(), 'db', 'db.json'), 'utf8');
+
+      // FILTER NOTE
+      const notes = JSON.parse(db_response);
+      const filterNotes = notes.filter((note) => {
+        if (note.id === id) return note;
+      });
+
+      // WRITE DB
+      await fs.writeFile(path.join(process.cwd(), 'db', 'db.json'), JSON.stringify(filterNotes));
+
+      // RETURN DB as JSON
+      return res.json(filterNotes);
+    } catch (error) {
+      console.error(error);
+      return res.status(500);
+    }
+  });
 };
