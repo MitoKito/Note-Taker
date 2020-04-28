@@ -14,10 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Home
-app.get('/', (req, res) => {
-  res.sendFile(path.join(PUBLIC_FOLDER_PATH, 'index.html'));
-});
+// Routes
+require('./routes/HTMLRoute')(app);
 
 // Start server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));
