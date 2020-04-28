@@ -3,13 +3,14 @@ const path = require('path');
 const { v4: uuid } = require('uuid');
 
 module.exports = function (app) {
+  const DATABASE_PATH = path.join(process.cwd(), 'db', 'db.json');
 
   // GET request notes from database
   // GET REQUEST -> READ DB -> RETURN DB as JSON
   app.get('/api/notes', async (req, res) => {
     try {
       // READ DB
-      const db_response = await fs.readFile(path.join(process.cwd(), 'db', 'db.json'), 'utf8');
+      const db_response = await fs.readFile(DATABASE_PATH, 'utf8');
 
       // RETURN DB as JSON
       return res.json(JSON.parse(db_response));
@@ -26,7 +27,7 @@ module.exports = function (app) {
 
     try {
       // READ DB
-      const db_response = await fs.readFile(path.join(process.cwd(), 'db', 'db.json'), 'utf8');
+      const db_response = await fs.readFile(DATABASE_PATH, 'utf8');
       const notes = JSON.parse(db_response);
 
       // ADD ID to NOTE
@@ -34,7 +35,7 @@ module.exports = function (app) {
       notes.push(body);
 
       // WRITE DB
-      await fs.writeFile(path.join(process.cwd(), 'db', 'db.json'), JSON.stringify(notes));
+      await fs.writeFile(DATABASE_PATH, JSON.stringify(notes));
 
       // RETURN DB as JSON
       return res.json(notes);
@@ -51,7 +52,7 @@ module.exports = function (app) {
 
     try {
       // READ DB
-      const db_response = await fs.readFile(path.join(process.cwd(), 'db', 'db.json'), 'utf8');
+      const db_response = await fs.readFile(DATABASE_PATH, 'utf8');
 
       // FILTER NOTE
       const notes = JSON.parse(db_response);
@@ -60,7 +61,7 @@ module.exports = function (app) {
       });
 
       // WRITE DB
-      await fs.writeFile(path.join(process.cwd(), 'db', 'db.json'), JSON.stringify(filterNotes));
+      await fs.writeFile(DATABASE_PATH, JSON.stringify(filterNotes));
 
       // RETURN DB as JSON
       return res.json(filterNotes);
