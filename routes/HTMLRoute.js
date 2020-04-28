@@ -7,4 +7,14 @@ module.exports = function (app) {
   app.get('/', (req, res) => {
     res.sendFile(path.join(PUBLIC_FOLDER_PATH, 'index.html'));
   });
+
+  // Notes Editor
+  app.get('/notes', (req, res) => {
+    res.sendFile(path.join(PUBLIC_FOLDER_PATH, 'notes.html'));
+  });
+
+  // No Match -> Home Page
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(PUBLIC_FOLDER_PATH, 'index.html'));
+  })
 };
