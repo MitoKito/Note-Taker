@@ -18,4 +18,30 @@ module.exports = function (app) {
       return res.status(500);
     }
   });
+
+  // POST request to create a new note to database
+  // POST REQUEST -> READ DB -> ADD ID to NOTE -> WRITE DB -> Return DB as JSON
+  app.post('/api/notes', async (req, res) => {
+    const { body } = req;
+
+    try {
+      // READ DB
+      const db_response = await fs.readFile(path.join(process.cwd(), 'db', 'db.json'), 'utf8');
+      const notes = JSON.parse(db_response);
+
+      // ADD ID to NOTE
+      body.id = uuid();
+      notes.push(body);
+
+      // WRITE DB
+      await fs.writeFile(path.join(process.cwd(), 'db', 'db.json'), JSON.stringify(notes));
+
+      // RETURN DB as JSON
+      return res.json(notes);
+    } catch (error) {
+      console.error(error);
+      return res.status(500);
+    }
+  });
+
 };
