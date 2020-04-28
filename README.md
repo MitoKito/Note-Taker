@@ -1,6 +1,4 @@
-
 # Note Taker
-![None](undefined)
 
 ## Description
 A Note Taker application using express
