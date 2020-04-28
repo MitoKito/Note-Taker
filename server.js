@@ -16,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 require('./routes/HTMLRoute')(app);
+require('./routes/JSONRoute')(app);
 
 // Start server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));
