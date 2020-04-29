@@ -18,5 +18,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./routes/HTMLRoute')(app);
 require('./routes/JSONRoute')(app);
 
+// Redirect
+
+// No Match -> Home Page
+app.use((req, res) => {
+  res.sendFile(path.join(PUBLIC_FOLDER_PATH, 'index.html'));
+})
+
 // Start server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));
