@@ -48,7 +48,7 @@ module.exports = function (app) {
   // DELETE request to filter and delete a note from the database
   // DELETE REQUEST -> READ DB -> FILTER NOTE -> WRITE DB -> RETURN DB as JSON
   app.delete('/api/notes/:id', async (req, res) => {
-    const { id } = req.param;
+    const { id } = req.params;
 
     try {
       // READ DB
@@ -57,7 +57,7 @@ module.exports = function (app) {
       // FILTER NOTE
       const notes = JSON.parse(db_response);
       const filterNotes = notes.filter((note) => {
-        if (note.id === id) return note;
+        if (note.id !== id) return note;
       });
 
       // WRITE DB
