@@ -21,7 +21,7 @@ require('./routes/JSONRoute')(app);
 // Redirect
 
 // No Match -> Home Page
-app.use((req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.join(PUBLIC_FOLDER_PATH, 'index.html'));
 })
 
